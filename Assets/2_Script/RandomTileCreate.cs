@@ -24,10 +24,6 @@ public class RandomTileCreate : MonoBehaviour
         public GameObject obj;
         public Tile tile;
 
-        //Astar을 위한 변수
-        public int F;
-        public int G;
-
         public Tilemap(Tile tile, Pos pos, GameObject obj = null)
         {
             this.obj = obj;
@@ -187,13 +183,18 @@ public class RandomTileCreate : MonoBehaviour
     }
 
     //초반 적생성 오브젝트 초기화
-    public void InitCreateEnemy(GameObject[] objects)
+    public void InitCreateEnemy(GameObject[] objects, MonsterScriptable[] datas)
     {
         for (int i = 0; i < enemy.Count; i++)
         {
             SpwanEnemy spwan = enemy[i].obj.AddComponent<SpwanEnemy>();
             if(i < objects.Length)
+            {
                 spwan.enemy = objects[i];
+                spwan.datas = datas[i];
+            }
+
+            
 
             enemy[i].obj.SetActive(false);
         }

@@ -18,7 +18,10 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    //나중에 점수 매니저때 델리게이트 만들기
+
     public RandomTileCreate randTile = null;
+    public MonsterScriptable[] datas; // 몬스터 데이터
     public GameObject[] gameObjects; // 적 오브젝트
     private void Awake()
     {
@@ -36,6 +39,7 @@ public class EnemyManager : MonoBehaviour
     public void InitEnemy(RandomTileCreate rand)
     {
         randTile = rand;
-        randTile.InitCreateEnemy(gameObjects);
+        randTile.InitCreateEnemy(gameObjects, datas);
+
     }
 }

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class SpwanEnemy : MonoBehaviour
 {
     public GameObject enemy;
     public RandomTileCreate randTile;
     public List<RandomTileCreate.Tilemap> posList;
+    public MonsterScriptable datas;
 
     // 적 생성 가능한 bool
     public bool isEnemy = true;
@@ -19,12 +21,30 @@ public class SpwanEnemy : MonoBehaviour
     }
 
     //오브젝트 상태 초기화
-   
-    void CreateEnemy()
+    void CreateEnemy(int value)
     {
-        Instantiate(enemy, transform.position + new Vector3(0, 3,0), Quaternion.identity);
+        GameObject clone = Instantiate(enemy, transform.position + new Vector3(0, 3,0), Quaternion.identity);
+        FindPathEnemy findPath = clone.AddComponent<FindPathEnemy>();
+        findPath.InitEnemyData(randTile.tiles, randTile.x, randTile.z, randTile.startX, randTile.startZ, datas);
+        //A* 길찾기 리스트 초기화
+        Debug.Log(value);
+        findPath.Astar(posList[value].pos.x, posList[value].pos.z);
+        StartCoroutine(findPath.MoveAlongPath(0, clone));
+
     }
 
+    int GetActiveCount()
+    {
+        int activeCount = 0;
+        foreach (RandomTileCreate.Tilemap tile in posList)
+        {
+            if (tile.obj.activeSelf)
+            {
+                activeCount++;
+            }
+        }
+        return activeCount;
+    }
     float GetRandomTime()
     {
         //Debug.Log("랜덤범위 설정");
@@ -37,8 +57,8 @@ public class SpwanEnemy : MonoBehaviour
         if(time >= GetRandomTime() && isEnemy)
         {
             isEnemy = false; //적 하나만 생성
-            Debug.Log("나 실행되고 있어");
-            CreateEnemy();
+            Debug.Log("dd");
+            CreateEnemy(Random.Range(0,GetActiveCount()));
             time = 0;
         }
     }

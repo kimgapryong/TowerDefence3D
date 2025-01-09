@@ -47,6 +47,7 @@ public class MapManager : MonoBehaviour
         //利积己 包府
         enemyManager = EnemyManager.Instance;
         enemyManager.InitEnemy(randTile);
+
         //敲饭捞绢 积己
         createPlayer = GetComponent<CreatePlayer>();
         createPlayer.InitPlayer(randTile);

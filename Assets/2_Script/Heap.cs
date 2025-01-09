@@ -21,7 +21,7 @@ public class Heap<T> where T : IComparable<T>
         {
             int parent = (now - 1) / 2;
 
-            if (values[now].CompareTo(values[parent]) > 0) break;
+            if (values[now].CompareTo(values[parent]) >= 0) break;
 
             T temp = values[now];
             values[now] = values[parent];

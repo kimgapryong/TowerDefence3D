@@ -27,7 +27,7 @@ public class RandomTileCreate : MonoBehaviour
         public Tile tile;
 
         private bool _equipped = false;
-        public bool equipped { get { return _equipped; } }
+      
         public Tilemap(Tile tile, Pos pos, GameObject obj = null)
         {
             this.obj = obj;
@@ -44,11 +44,7 @@ public class RandomTileCreate : MonoBehaviour
         {
             this.tile = tile;
         }
-        //타일에 영웅이 설치되어 있는지 확인
-        public void SetEquipped(bool check)
-        {
-            _equipped = check;
-        }
+ 
     }
     public GameObject[] tile;
     

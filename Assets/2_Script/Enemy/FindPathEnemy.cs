@@ -148,11 +148,12 @@ public class FindPathEnemy : MonoBehaviour
         }
 
         RandomTileCreate.Tilemap currentTile = tileList[currentIndex];
+
+
         RandomTileCreate.Tilemap nextTile = tileList[currentIndex + 1];
 
         if (currentTile.obj != null && nextTile.obj != null)
         {
-
 
             Vector3 start = new Vector3(currentTile.obj.transform.position.x, obj.transform.position.y, currentTile.obj.transform.position.z);
             Vector3 end = new Vector3(nextTile.obj.transform.position.x, obj.transform.position.y, nextTile.obj.transform.position.z);

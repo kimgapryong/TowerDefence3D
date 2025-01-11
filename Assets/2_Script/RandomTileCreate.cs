@@ -5,7 +5,9 @@ using UnityEngine;
 using System.Linq;
 using Unity.VisualScripting;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using System;
 
+[Serializable]
 public class Pos
 {
     public int x;
@@ -19,24 +21,33 @@ public class Pos
 public class RandomTileCreate : MonoBehaviour
 {
     public class Tilemap
-    {
+    {        
         public Pos pos;
         public GameObject obj;
         public Tile tile;
 
+        private bool _equipped = false;
+        public bool equipped { get { return _equipped; } }
         public Tilemap(Tile tile, Pos pos, GameObject obj = null)
         {
             this.obj = obj;
             this.tile = tile;
             this.pos = pos;
         }
+        //오브젝트를 만들고 넣어주는 함수
         public void UpdateObject(GameObject newObject)
         {
             obj = newObject;
         }
+        //무슨 타일인지 업데이트 해주는 함수
         public void UpdateTile(Tile tile)
         {
             this.tile = tile;
+        }
+        //타일에 영웅이 설치되어 있는지 확인
+        public void SetEquipped(bool check)
+        {
+            _equipped = check;
         }
     }
     public GameObject[] tile;
@@ -57,7 +68,6 @@ public class RandomTileCreate : MonoBehaviour
         Start = 2,
     }
     public Tilemap[,] tiles;
-
 
     public void SetTile(Transform trans)
     {
@@ -84,13 +94,13 @@ public class RandomTileCreate : MonoBehaviour
         int endZ = 0;
 
         // 적 생성 기지 생성
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 10; i++)
         {
-            int rand = Random.Range(0, 2);
+            int rand = UnityEngine.Random.Range(0, 2);
             if (rand == 0)
             {
-                endZ = Random.Range(0, z - 1);
-                int ran = Random.Range(0, 2);
+                endZ = UnityEngine.Random.Range(0, z - 1);
+                int ran = UnityEngine.Random.Range(0, 2);
                 if (ran == 0)
                     endX = 0;
                 else
@@ -99,8 +109,8 @@ public class RandomTileCreate : MonoBehaviour
             }
             else
             {
-                endX = Random.Range(0, x - 1);
-                int ran = Random.Range(0, 2);
+                endX = UnityEngine.Random.Range(0, x - 1);
+                int ran = UnityEngine.Random.Range(0, 2);
                 if (ran == 0)
                     endZ = 0;
                 else
@@ -116,6 +126,7 @@ public class RandomTileCreate : MonoBehaviour
     //맵을 생성시 자꾸 대각선으로 생성될 때가 있음
     void FindEmpty(int strX, int strZ, int endX, int endZ)
     {
+        Debug.LogError(string.Format("Start ({0},{1}) to End ({2},{3})", strX, strZ, endX, endZ));
         Queue<Pos> queue = new Queue<Pos>();
         bool[,] visited = new bool[x,z];
         Pos[,] parent = new Pos[x,z];
@@ -127,25 +138,41 @@ public class RandomTileCreate : MonoBehaviour
         parent[strX, strZ] = new Pos(strX, strZ);
         visited[strX, strZ] = true;
 
-        while(queue.Count > 0)
+
+        while (queue.Count > 0)
         {
             Pos now = queue.Dequeue();
 
-            for(int i = 0; i < 4; i++)
+            int nextX = 0;
+            int nextZ = 0;
+
+
+            List<int> randIdx = new List<int>();
+
+            for (int i = 0; i < 4; i++)
             {
-                int nextX = now.x + deltaX[i];
-                int nextZ = now.z + deltaZ[i];
+                randIdx.Add(i);
+
+            }
+
+            var random = new System.Random();
+            randIdx = randIdx.OrderBy(x => random.Next()).ToList();
+
+            foreach (int i in randIdx)
+            {
+                nextX = now.x + deltaX[i];
+                nextZ = now.z + deltaZ[i];
 
                 if (nextX < 0 || nextZ < 0 || nextX >= x || nextZ >= z) continue;
                 if (visited[nextX, nextZ]) continue;
-                
+
+                Debug.LogError(string.Format("pos now ({0},{1}) / parent : ({2},{3})", now.x, now.z, nextX,nextZ));
                 parent[nextX, nextZ] = now;
                 visited[nextX, nextZ] = true;
                 queue.Enqueue(new Pos(nextX, nextZ));
 
-                if (nextZ == endZ && nextX == endX) break;
             }
-
+            if (nextZ == endZ && nextX == endX) break;
         }
 
         int nowX = endX;
@@ -153,11 +180,14 @@ public class RandomTileCreate : MonoBehaviour
 
         while (parent[nowX, nowZ].x != nowX || parent[nowX,nowZ].z != nowZ)
         {
-            Debug.Log("while문" + parent[nowX, nowZ]);
+            int nextX = nowX;
+            int nextZ = nowZ;
+            Debug.LogWarning(string.Format("Update Tile Called : ({0},{1})", nowX, nowZ));
             tiles[nowX, nowZ].UpdateTile(Tile.Empty);
-            nowX = parent[nowX, nowZ].x;
-            nowZ = parent[nowX, nowZ].z;
+            nowX = parent[nextX, nextZ].x;
+            nowZ = parent[nextX, nextZ].z;
         }
+        Debug.LogWarning(string.Format("Update Tile Called : ({0},{1})", nowX, nowZ));
         tiles[nowX, nowZ].UpdateTile(Tile.Start);
     }
     void CreateTile(Transform trans)
@@ -169,7 +199,7 @@ public class RandomTileCreate : MonoBehaviour
                 GameObject obj = Instantiate(tile[(int)tiles[i, j].tile], new Vector3(i * MOVE, 0, j * MOVE), Quaternion.identity);
                 obj.transform.SetParent(trans);
                 obj.transform.Find("default").AddComponent<BoxCollider>();
-                obj.transform.Find("default").gameObject.layer = LayerMask.NameToLayer("Ground");
+                obj.transform.Find("default").gameObject.tag = "Ground";
                 tiles[i,j].UpdateObject(obj.transform.Find("default").gameObject);
 
             }

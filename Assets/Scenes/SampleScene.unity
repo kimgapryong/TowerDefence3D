@@ -516,8 +516,9 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: a7a10e78149d3df4a80fa8cef5db1e91, type: 3}
   - {fileID: 919132149155446097, guid: 1a5eee2ae70936442b63db618da80e24, type: 3}
   - {fileID: 919132149155446097, guid: 7046396b2cefe19429e089faa7cb0a9c, type: 3}
-  x: 50
-  z: 50
+  enemy: []
+  x: 70
+  z: 70
   startX: 0
   startZ: 0
 --- !u!114 &2065471602

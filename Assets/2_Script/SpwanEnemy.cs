@@ -23,11 +23,10 @@ public class SpwanEnemy : MonoBehaviour
     //오브젝트 상태 초기화
     void CreateEnemy(int value)
     {
-        GameObject clone = Instantiate(enemy, transform.position + new Vector3(0, 3,0), Quaternion.identity);
+        GameObject clone = Instantiate(enemy, transform.position + new Vector3(0, 2,0), Quaternion.identity);
         FindPathEnemy findPath = clone.AddComponent<FindPathEnemy>();
         findPath.InitEnemyData(randTile.tiles, randTile.x, randTile.z, randTile.startX, randTile.startZ, datas);
         //A* 길찾기 리스트 초기화
-        Debug.Log(value);
         findPath.Astar(posList[value].pos.x, posList[value].pos.z);
         StartCoroutine(findPath.MoveAlongPath(0, clone));
 
@@ -53,11 +52,9 @@ public class SpwanEnemy : MonoBehaviour
     private void Update()
     {
         time += Time.deltaTime;
-        //Debug.Log("Time" + time );
         if(time >= GetRandomTime() && isEnemy)
         {
             isEnemy = false; //적 하나만 생성
-            Debug.Log("dd");
             CreateEnemy(Random.Range(0,GetActiveCount()));
             time = 0;
         }

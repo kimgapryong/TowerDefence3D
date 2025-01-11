@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heap<T> where T : IComparable<T>
+public class Heap<T> : IEnumerable<T> where T : IComparable<T>
 {
     // 같으면 0
     // 크면 1
@@ -64,4 +64,18 @@ public class Heap<T> where T : IComparable<T>
     }
 
     public int Count {  get { return values.Count; } }
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        foreach (var value in values)
+        {
+            yield return value;
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
 }

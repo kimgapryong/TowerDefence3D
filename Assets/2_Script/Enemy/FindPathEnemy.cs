@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class FindPathEnemy : MonoBehaviour
 {
@@ -21,6 +23,7 @@ public class FindPathEnemy : MonoBehaviour
     //맵의 중아 지점
     private int endX;
     private int endZ;
+    
     struct PQnode : IComparable<PQnode>
     {
         public int F;
@@ -49,7 +52,7 @@ public class FindPathEnemy : MonoBehaviour
     }
     public void Astar(int strX, int strZ)
     {
-        Debug.Log("dd");
+
         int[] deltaX = new int[4] { 1, 0, -1, 0 };
         int[] deltaZ = new int[4] { 0, -1, 0, 1 };
 
@@ -66,19 +69,19 @@ public class FindPathEnemy : MonoBehaviour
                 open[x, z] = int.MaxValue;
             }
         }
-        Debug.Log("현재 Value값 " + xValue + " " + zValue);
-        Debug.Log("현재 str위치 " + strX + " " + strZ);
+       
+        
 
         // 시작 지점 설정
         open[strX, strZ] = Math.Abs(endX - strX) + Math.Abs(endZ - strZ);
         pqHeap.Push(new PQnode { F = open[strX, strZ], G = 0, X = strX, Z = strZ });
+        //Debug.Log(tilemaps[strX,strZ].pos.x + " " + tilemaps[strX, strZ].pos.z);
         parent[strX, strZ] = tilemaps[strX, strZ];
-        Debug.Log("ㅁㅁㅁㅁㅁㅁ");
+        //Debug.Log(parent[strX, strZ].pos.x);
         while (pqHeap.Count > 0)
         {
-            
             PQnode pq = pqHeap.Pop();
-
+           
             if (closed[pq.X, pq.Z]) continue;
             closed[pq.X, pq.Z] = true;
 
@@ -109,6 +112,10 @@ public class FindPathEnemy : MonoBehaviour
                 open[nextX, nextZ] = f;
                 pqHeap.Push(new PQnode() { F = f, G = g, X = nextX, Z = nextZ });
                 parent[nextX, nextZ] = tilemaps[pq.X, pq.Z];
+
+                //Debug.LogError(nextX + " / " + nextZ);
+                //Debug.LogError("parent " + parent[nextX, nextZ].pos.x + " / " + parent[nextX, nextZ].pos.z);
+
             }
         }
 
@@ -120,8 +127,8 @@ public class FindPathEnemy : MonoBehaviour
     {
         int destX = endX;
         int destZ = endZ;
+        Debug.Log("(" +endX  + ", " + endZ + ")");
 
-        
         while(parent[destX, destZ].pos.x != destX || parent[destX,destZ].pos.z != destZ)
         {
             tileList.Add(parent[destX, destZ]);
@@ -145,9 +152,14 @@ public class FindPathEnemy : MonoBehaviour
 
         if (currentTile.obj != null && nextTile.obj != null)
         {
-     
-            Vector3 start = obj.transform.position;
-            Vector3 end = nextTile.obj.transform.position;
+
+
+            Vector3 start = new Vector3(currentTile.obj.transform.position.x, obj.transform.position.y, currentTile.obj.transform.position.z);
+            Vector3 end = new Vector3(nextTile.obj.transform.position.x, obj.transform.position.y, nextTile.obj.transform.position.z);
+
+
+            Vector3 targetPosition = new Vector3(nextTile.obj.transform.position.x, transform.position.y, nextTile.obj.transform.position.z);
+            transform.LookAt(targetPosition);
 
             float distance = Vector3.Distance(start, end);
             float elapsedTime = 0f;

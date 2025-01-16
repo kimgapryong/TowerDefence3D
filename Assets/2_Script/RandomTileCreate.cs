@@ -122,7 +122,6 @@ public class RandomTileCreate : MonoBehaviour
     //맵을 생성시 자꾸 대각선으로 생성될 때가 있음
     void FindEmpty(int strX, int strZ, int endX, int endZ)
     {
-        Debug.LogError(string.Format("Start ({0},{1}) to End ({2},{3})", strX, strZ, endX, endZ));
         Queue<Pos> queue = new Queue<Pos>();
         bool[,] visited = new bool[x,z];
         Pos[,] parent = new Pos[x,z];
@@ -162,7 +161,7 @@ public class RandomTileCreate : MonoBehaviour
                 if (nextX < 0 || nextZ < 0 || nextX >= x || nextZ >= z) continue;
                 if (visited[nextX, nextZ]) continue;
 
-                Debug.LogError(string.Format("pos now ({0},{1}) / parent : ({2},{3})", now.x, now.z, nextX,nextZ));
+              
                 parent[nextX, nextZ] = now;
                 visited[nextX, nextZ] = true;
                 queue.Enqueue(new Pos(nextX, nextZ));

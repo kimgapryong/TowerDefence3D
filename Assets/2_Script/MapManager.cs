@@ -20,24 +20,30 @@ public class MapManager : MonoBehaviour
         {
             if (instance == null)
             {
-                GameObject go = new GameObject("MapManager");
-                instance = go.AddComponent<MapManager>();
+     
+                instance = FindObjectOfType<MapManager>();
+
+           
+                if (instance == null)
+                {
+                    GameObject go = new GameObject("MapManager");
+                    instance = go.AddComponent<MapManager>();
+                   
+                }
             }
+            DontDestroyOnLoad(instance);
             return instance;
         }
     }
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this; 
-            DontDestroyOnLoad(this.gameObject); 
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
+
+    //ResourcesManager 스크립트
+    private ResourcesManager resource = new ResourcesManager();
+    public static ResourcesManager Resources { get { return Instance.resource; } }
+
+    //UIManager 스크립트
+    private UIManager ui = new UIManager(); 
+    public static UIManager Ui { get { return Instance.ui; } }  
+   
     private void Start()
     {
         //BFS을 활용한 맵생성
@@ -51,5 +57,8 @@ public class MapManager : MonoBehaviour
         //플레이어 생성
         createPlayer = GetComponent<CreatePlayer>();
         createPlayer.InitPlayer(randTile);
+
+        //UI 생성
+        ui.CreateUI<UI_Scene>("UI");
     }
 }

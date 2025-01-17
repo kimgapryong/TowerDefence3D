@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ResourcesManager
 {
-    private T Load<T>(string path) where T : Object
+    public T Load<T>(string path) where T : Object
     {
         return Resources.Load<T>(path);
     }
@@ -19,7 +19,7 @@ public class ResourcesManager
     }
 
     //모든 스크립터블 데이터 긁어오기
-    public List<T> LoadAllScriptableObjects<T>(string folderPath) where T : ScriptableObject
+    public List<T> LoadAllScriptableObjects<T>(string folderPath) where T : Object
     {
         List<T> scriptableObjects = new List<T>();
         T[] loadedObjects = Resources.LoadAll<T>(folderPath);

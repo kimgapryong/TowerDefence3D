@@ -26,7 +26,7 @@ public class RandomTileCreate : MonoBehaviour
         public GameObject obj;
         public Tile tile;
 
-        private bool _equipped = false;
+        public bool _equipped = false;
       
         public Tilemap(Tile tile, Pos pos, GameObject obj = null)
         {
@@ -44,13 +44,14 @@ public class RandomTileCreate : MonoBehaviour
         {
             this.tile = tile;
         }
+
  
     }
     public GameObject[] tile;
     
     //적 생성하는 위치의 노드
     public List<Tilemap> enemy = new List<Tilemap>();
-    private const int MOVE = 2;
+    public const int MOVE = 2;
 
     public int x = 26;
     public int z = 26;
@@ -195,6 +196,7 @@ public class RandomTileCreate : MonoBehaviour
                 obj.transform.SetParent(trans);
                 obj.transform.Find("default").AddComponent<BoxCollider>();
                 obj.transform.Find("default").gameObject.tag = "Ground";
+                obj.transform.Find("default").gameObject.layer = LayerMask.NameToLayer("Ground");
                 tiles[i,j].UpdateObject(obj.transform.Find("default").gameObject);
 
             }

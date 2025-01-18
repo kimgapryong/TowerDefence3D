@@ -15,9 +15,9 @@ public abstract class Hero_Base : MonoBehaviour
     {
         if (other.CompareTag("Monster"))
         {
-            Debug.Log("¾Èµµ¤Ä");
+            Debug.Log("¾ÈµÅ");
             monList.Add(other.gameObject);
-            if(currentMonster == null)
+            if(currentMonster == null || monList.Count == 1)
                 currentMonster = monList[0];
         }
     }

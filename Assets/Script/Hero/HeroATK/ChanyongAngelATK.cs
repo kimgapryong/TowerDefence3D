@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class ChanyongAngelATK : Hero_Base
 {
+    GameObject obj;
+    Transform fire;
+
+    private void Start()
+    {
+        obj = MapManager.Resources.Load<GameObject>("Prefab/Shooting/Heart");
+    }
     private void Update()
     {
         if(currentMonster != null)
@@ -12,6 +19,7 @@ public class ChanyongAngelATK : Hero_Base
     protected override void AtKHero()
     {
         
+
     }
 
 }

@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CreatePlayer : MonoBehaviour
+public class CreatePlayer
 {
     private PlayerMovement playerCam;
     private MoveCamera moveCam;
-    public GameObject player;
+    public GameObject clone;
 
     //플레이어의 상태 관리
     public void InitPlayer(RandomTileCreate randTile)
     {
-        GameObject clone = Instantiate(player, new Vector3(randTile.startX, 10, randTile.startZ), Quaternion.identity);
+        GameObject player = MapManager.Resources.Load<GameObject>("Prefab/Player");
+        clone = Object.Instantiate(player, new Vector3(randTile.startX, 10, randTile.startZ), Quaternion.identity);
 
         //카메라 설정
         playerCam = Camera.main.GetComponent<PlayerMovement>();
@@ -20,5 +21,6 @@ public class CreatePlayer : MonoBehaviour
 
         moveCam = Camera.main.GetComponent<MoveCamera>();
         moveCam.cameraPosition = clone.transform.Find("Chanyong/default/CameraPos");
+        MoveCamera.cameraDirection = clone.transform.Find("Chanyong/default/CameraPos");
     }
 }

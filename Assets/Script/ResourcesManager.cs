@@ -26,7 +26,6 @@ public class ResourcesManager
 
         foreach (T obj in loadedObjects)
         {
-            Debug.Log(obj.name); 
             scriptableObjects.Add(obj);
         }
        

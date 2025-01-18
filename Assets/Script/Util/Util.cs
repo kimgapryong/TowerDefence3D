@@ -51,6 +51,19 @@ public class Util : MonoBehaviour
         return null;
     }
 
-    //데이터 정렬
+    //부모찾기
+    public static GameObject FindParent(GameObject obj, string name)
+    {
+        GameObject parent = obj;
+        while (parent.transform.parent != null)
+        {
+            if (parent.transform.parent.name == name)
+                return parent.transform.parent.gameObject;
+
+            parent = obj.transform.parent.gameObject;
+        }
+        GameObject childObj = FindChildObj<GameObject>(parent, name);
+        return childObj;
+    }
 
 }

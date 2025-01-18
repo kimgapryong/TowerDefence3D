@@ -22,7 +22,10 @@ public class FindHeroTile : MonoBehaviour
             {
                 tilemap._equipped = true;
                 PlayerMovement.ClickHero = false;
+                MoveCamera.checkCam = false;
                 UI_ClickHero.setHero = false;
+                gameObject.transform.Find("Radious").GetComponent<MeshRenderer>().enabled = false;
+                gameObject.transform.Find("Radious").GetComponent<Hero_Base>().enabled = true;
                 Destroy(this); 
             }
         } 
@@ -30,6 +33,7 @@ public class FindHeroTile : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PlayerMovement.ClickHero = false;
+            MoveCamera.checkCam = false;
             UI_ClickHero.setHero = false;
             Destroy(gameObject);
         }

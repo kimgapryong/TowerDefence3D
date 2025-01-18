@@ -10,6 +10,7 @@ public class UI_ClickHero : UI_Base, IPointerClickHandler
 
     Hero_Data data;
     GameObject heroObj;
+    Hero_Base heroATK;
     public static bool setHero;
     enum Images
     {
@@ -40,8 +41,17 @@ public class UI_ClickHero : UI_Base, IPointerClickHandler
         if(!setHero)
         {
             GameObject clone = Instantiate(heroObj);
+
+            // 히어로 데이터 설정
+            Hero_Base heroBase = Util.FindChildObj<Hero_Base>(clone, "Radious");
+            heroBase.setData(data);
+            heroBase.enabled = false;
+           
             Util.GetOrAddComponent<FindHeroTile>(clone);
+            Transform radious = clone.transform.Find("Radious");
+            radious.localScale = Vector3.one * data.Radious;
             PlayerMovement.ClickHero = true;
+            MoveCamera.checkCam = true;
             setHero = true;
         }
       

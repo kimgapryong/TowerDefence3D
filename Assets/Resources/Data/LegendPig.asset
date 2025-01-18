@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 400521da10319e444982181c711f3bfd, type: 3}
-  m_Name: ChanyongAngel
+  m_Name: LegendPig
   m_EditorClassIdentifier: 
-  Money: 300
-  name: 0
-  Icon: {fileID: 21300000, guid: aa2cca5ede84f1049affab8aa739a929, type: 3}
-  Radious: 5
+  Money: 100
+  name: 1
+  Icon: {fileID: 21300000, guid: a2ee67616dbb941448a96f38542f3497, type: 3}
+  Radious: 20

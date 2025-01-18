@@ -8,10 +8,10 @@ public class MapManager : MonoBehaviour
 
     public Transform tileTrans;
     public RandomTileCreate randTile = null;
-
+    
     private EnemyManager enemyManager; //적 생성 매니저
-    CreatePlayer createPlayer = null;
     SpwanEnemy spwanEnemy = null;
+
     
     private static MapManager instance;
     public static MapManager Instance
@@ -43,8 +43,14 @@ public class MapManager : MonoBehaviour
     //UIManager 스크립트
     private UIManager ui = new UIManager(); 
     public static UIManager Ui { get { return Instance.ui; } }  
+
+    //플레이어 매니저
+    private CreatePlayer _player  = new CreatePlayer();
+    public static CreatePlayer CreatePlayer { get { return instance._player; } }
+
+    public static GameObject Player { get { return instance._player.clone; } }
    
-    private void Start()
+    private void Awake()
     {
         //BFS을 활용한 맵생성
         randTile = GetComponent<RandomTileCreate>();
@@ -55,10 +61,11 @@ public class MapManager : MonoBehaviour
         enemyManager.InitEnemy(randTile);
 
         //플레이어 생성
-        createPlayer = GetComponent<CreatePlayer>();
-        createPlayer.InitPlayer(randTile);
+        _player.InitPlayer(randTile);
 
         //UI 생성
         ui.CreateUI<UI_Scene>("UI");
+        ui.CreateUI<UI_Monster>("Monster_UI");
+       
     }
 }

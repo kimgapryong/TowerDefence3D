@@ -35,7 +35,8 @@ public class MapManager : MonoBehaviour
             return instance;
         }
     }
-
+    private AtkManager _atk = new AtkManager();
+    public static AtkManager Atk { get { return Instance._atk; } }
     //ResourcesManager 스크립트
     private ResourcesManager resource = new ResourcesManager();
     public static ResourcesManager Resources { get { return Instance.resource; } }

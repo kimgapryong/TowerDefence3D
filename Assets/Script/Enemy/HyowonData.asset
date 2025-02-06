@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: HyowonData
   m_EditorClassIdentifier: 
   health: 100
+  currentHp: 100
   speed: 2.5

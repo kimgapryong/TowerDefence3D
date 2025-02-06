@@ -4,5 +4,6 @@ using UnityEngine;
 public class MonsterScriptable : ScriptableObject
 {
     public float health;
+    public float currentHp;
     public float speed;
 }

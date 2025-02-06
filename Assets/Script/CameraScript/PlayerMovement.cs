@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     float xRotation;
     float yRotation;
 
+
     private static bool _click = false;
     public static bool ClickHero { get { return _click; } set { _click = value; } }
 
@@ -36,23 +37,35 @@ public class PlayerMovement : MonoBehaviour
             {
                 return;
             }
-            //오른쪽 클릭시 카메라 회전 
-            if (Input.GetMouseButtonDown(0))
+
+            if(Input.GetMouseButton(1))
             {
+
                 Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
-            //왼쪽 클릭시 카메라 회전 멈춤
-            if (Input.GetMouseButtonDown(1))
+                MoveMouse(true);
+            }else if (Input.GetMouseButtonUp(1))
             {
                 Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
             }
-            //커서 확인하여 카메라 회전 적용
-            if (!Cursor.visible)
-            {
-                MoveMouse();
-            }
+            
+            /* //오른쪽 클릭시 카메라 회전 
+             if (Input.GetMouseButtonDown(0))
+             {
+                 Cursor.lockState = CursorLockMode.Locked;
+                 Cursor.visible = false;
+             }
+             //왼쪽 클릭시 카메라 회전 멈춤
+             if (Input.GetMouseButtonDown(1))
+             {
+                 Cursor.lockState = CursorLockMode.None;
+                 Cursor.visible = true;
+             }
+             //커서 확인하여 카메라 회전 적용
+             if (!Cursor.visible)
+             {
+                 MoveMouse();
+             }*/
+
         }
        
     }

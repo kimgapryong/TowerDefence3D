@@ -50,6 +50,10 @@ public class MapManager : MonoBehaviour
     public static CreatePlayer CreatePlayer { get { return instance._player; } }
 
     public static GameObject Player { get { return instance._player.clone; } }
+
+    //돈 매니저
+    private MoneyManager _money = new MoneyManager();
+    public static MoneyManager Money { get { return Instance._money; } }
    
     private void Awake()
     {
@@ -66,7 +70,6 @@ public class MapManager : MonoBehaviour
 
         //UI 생성
         ui.CreateUI<UI_Scene>("UI");
-        ui.CreateUI<UI_Monster>("Monster_UI");
        
     }
 }

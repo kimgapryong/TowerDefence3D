@@ -3,22 +3,25 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Scene : MonoBehaviour
 {
     List<Hero_Data> heroData = new List<Hero_Data>();
+   
     //영웅 등록하는
     public enum Hero
     {
         ChanyongAngel,
         LegendPig,
     }
-
+    
     private void Start()
     {
-        RetryHeroData();
+        RetrySceneData();
+        
     }
-    private void RetryHeroData()
+    private void RetrySceneData()
     {
         heroData = MapManager.Resources.LoadAllScriptableObjects<Hero_Data>("Data");
         SetHeroIcon();

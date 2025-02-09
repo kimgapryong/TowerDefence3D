@@ -4,15 +4,31 @@ using UnityEngine;
 
 public class AtkManager
 {
-    public void RemoteAtk(GameObject obj, float damage)
+    public void RemoteAtk(Hero_Base hero, GameObject obj, float damage)
     {
-        MonsterScriptable data =  obj.GetComponent<FindPathEnemy>().data;
+       FindPathEnemy findPath = obj.GetComponent<FindPathEnemy>();
 
-        if(data == null )
+        if(findPath == null )
             return;
 
-        data.currentHp -= damage;
+        findPath.currentHp -= damage;
+
+        //죽음
+        if( findPath.currentHp <= 0)
+        {
+            hero.DeathData(obj);   
+            return;
+        }
 
         //TODO 여기에서 체력 깎는 이벤트 보내기
+        MapManager.Ui.EnemyBarSlider<UI_Enemy>(obj, findPath.currentHp, findPath.maxHp);
+    }
+
+    public void PoopAtk(Poop_Tower poop, float damage)
+    {
+        poop.current -= damage;
+
+        GameObject obj = poop.gameObject;
+        MapManager.Ui.EnemyBarSlider<UI_Tower>(obj, poop.current, poop.maxHp);
     }
 }

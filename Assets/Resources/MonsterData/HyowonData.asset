@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   currentHp: 100
-  speed: 2.5
+  speed: 11
+  Money: 100

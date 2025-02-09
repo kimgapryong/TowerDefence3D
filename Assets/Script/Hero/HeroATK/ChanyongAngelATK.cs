@@ -19,17 +19,16 @@ public class ChanyongAngelATK : Hero_Base
     }
     protected override void AtKHero()
     {
-        GameObject clone = Instantiate(obj, gameObject.transform.position, Quaternion.identity);
-        Debug.Log(clone);
-
+        
         if(currentMonster != null)
         {
             Vector3 dir = (currentMonster.transform.position - gameObject.transform.position).normalized;
+            GameObject clone = Instantiate(obj, gameObject.transform.position, Quaternion.identity);
 
             BulletSpeed bullet = Util.GetOrAddComponent<BulletSpeed>(clone);
             bullet.SetDirectory(dir);
 
-            MapManager.Atk.RemoteAtk(currentMonster, data.Damage);
+            MapManager.Atk.RemoteAtk(this, currentMonster, data.Damage);
         }
            
 

@@ -15,6 +15,6 @@ MonoBehaviour:
   Money: 300
   name: 0
   Icon: {fileID: 21300000, guid: aa2cca5ede84f1049affab8aa739a929, type: 3}
-  Damage: 0
+  Damage: 200
   Radious: 5
-  AtkCool: 3
+  AtkCool: 1

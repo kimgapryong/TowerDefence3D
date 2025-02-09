@@ -9,7 +9,6 @@ public class SpwanEnemy : MonoBehaviour
     public RandomTileCreate randTile;
     public List<RandomTileCreate.Tilemap> posList;
     public MonsterScriptable datas;
-    public UI_Monster uI_Monster;
 
     // 적 생성 가능한 bool
     public bool isEnemy = true;
@@ -20,14 +19,16 @@ public class SpwanEnemy : MonoBehaviour
         randTile = MapManager.Instance.randTile;
         posList = randTile.enemy;
 
-        uI_Monster = GameObject.Find("Monster_UI(Clone)").GetComponent<UI_Monster>();
+
     }
 
     //오브젝트 상태 초기화
     void CreateEnemy(int value)
     {
         GameObject clone = Instantiate(enemy, transform.position + new Vector3(0, 2,0), Quaternion.identity);
-        uI_Monster.CreateEnemy_UI(clone);
+        UI_Enemy enemyUi = MapManager.Ui.CreateUI<UI_Enemy>("Enemy_Bar", clone.transform);
+        enemyUi.name = enemyUi.name.Replace("(Clone)", "");
+        enemyUi.SetMyEnemy(clone);
         FindPathEnemy findPath = clone.AddComponent<FindPathEnemy>();
         findPath.InitEnemyData(randTile.tiles, randTile.x, randTile.z, randTile.startX, randTile.startZ, datas);
         //A* 길찾기 리스트 초기화

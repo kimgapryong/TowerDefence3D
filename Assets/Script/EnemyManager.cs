@@ -42,4 +42,5 @@ public class EnemyManager : MonoBehaviour
         randTile.InitCreateEnemy(gameObjects, datas);
 
     }
+
 }

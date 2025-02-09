@@ -70,6 +70,7 @@ public class RandomTileCreate : MonoBehaviour
         tiles = new Tilemap[x,z];
         SetTileType();
         CreateTile(trans);
+        Create_PoopTower();
     }
     void SetTileType()
     {
@@ -225,5 +226,14 @@ public class RandomTileCreate : MonoBehaviour
             enemy[i].obj.SetActive(false);
         }
         enemy[0].obj.SetActive(true);
+    }
+
+    void Create_PoopTower()
+    {
+        GameObject obj = MapManager.Resources.Instantiate("Poop");
+        Poop_Tower poop = Util.GetOrAddComponent<Poop_Tower>(obj);
+
+        poop.SetPoopTower(obj, startX, startZ, 500); // TODO 스테이지 데이터 적용해야 함
+
     }
 }

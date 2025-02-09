@@ -50,6 +50,7 @@ public class UI_ClickHero : UI_Base, IPointerClickHandler
             Util.GetOrAddComponent<FindHeroTile>(clone);
             Transform radious = clone.transform.Find("Radious");
             radious.localScale = Vector3.one * data.Radious;
+
             PlayerMovement.ClickHero = true;
             MoveCamera.checkCam = true;
             setHero = true;

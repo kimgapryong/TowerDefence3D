@@ -10,6 +10,10 @@ public class FindPathEnemy : MonoBehaviour
     //몬스터의 데이터
     public MonsterScriptable data;
 
+    public float maxHp;
+    public float currentHp;
+
+    public float money;
     //부모의 Tilemap을 담을 리스트
     public List<RandomTileCreate.Tilemap> tileList;
 
@@ -46,6 +50,10 @@ public class FindPathEnemy : MonoBehaviour
         this.endX = endX;
         this.endZ = endZ;
         this.data = data;
+
+        money = data.Money;
+        maxHp = data.health;
+        currentHp = maxHp;
     }
     public void Astar(int strX, int strZ)
     {

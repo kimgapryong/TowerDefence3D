@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UI_Scene;
 
 public class FindHeroTile : MonoBehaviour
 {
@@ -20,12 +21,26 @@ public class FindHeroTile : MonoBehaviour
 
             if (!tilemap._equipped)
             {
-                tilemap._equipped = true;
+
                 PlayerMovement.ClickHero = false;
-                MoveCamera.checkCam = false;
+                MoveCamera.checkCam = false; 
                 UI_ClickHero.setHero = false;
+
+                Hero_Base hero = gameObject.transform.Find("Radious").GetComponent<Hero_Base>();
+                if (MapManager.Money.Money < hero.data.Money)
+                {
+                    Destroy(gameObject);
+                    return;
+                }
+                hero.enabled = true;
+                MapManager.Money.Money -= hero.data.Money;
+
+                tilemap._equipped = true; //타일에 오브젝트가 있다고 알림
+               
                 gameObject.transform.Find("Radious").GetComponent<MeshRenderer>().enabled = false;
-                gameObject.transform.Find("Radious").GetComponent<Hero_Base>().enabled = true;
+
+              
+
                 Destroy(this); 
             }
         } 
